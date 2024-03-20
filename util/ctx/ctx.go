@@ -51,3 +51,14 @@ func WithValues(parent CTX, kvs map[string]interface{}) CTX {
 	}
 	return c
 }
+
+// WithCancel creates a new CTX and a cancel function from the provided parent CTX.
+// The cancel function, when called, cancels the new CTX, releasing any resources associated with it,
+// such as child goroutines waiting on the CTX's Done channel.
+func WithCancel(parent CTX) (CTX, context.CancelFunc) {
+	context, cancel := context.WithCancel(parent)
+	return CTX{
+		Context:     context,
+		FieldLogger: parent.FieldLogger,
+	}, cancel
+}
