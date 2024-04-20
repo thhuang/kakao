@@ -4,8 +4,8 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 
-	"github.com/thhuang/kakao/util/ctx"
-	"github.com/thhuang/kakao/util/keyword"
+	"github.com/thhuang/kakao/pkg/util/ctx"
+	"github.com/thhuang/kakao/pkg/util/keyword"
 )
 
 func AddContext() fiber.Handler {

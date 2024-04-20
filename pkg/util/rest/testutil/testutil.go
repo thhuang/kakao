@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"strings"
 
-	errorUtil "github.com/thhuang/kakao/util/error"
-	"github.com/thhuang/kakao/util/keyword"
+	errorUtil "github.com/thhuang/kakao/pkg/util/error"
+	"github.com/thhuang/kakao/pkg/util/keyword"
 )
 
 type QueryParam struct {
