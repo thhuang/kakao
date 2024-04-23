@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package error;
+
+option go_package = "github.com/thhuang/kakao/pkg/proto/error";
+
+enum ErrorCode {
+    UNSPECIFIED = 0;
+    UNKNOWN = 13703;
+    NOT_IMPLEMENTED = 13704;
+    BAD_REQUEST = 13705;
+}
+
+message ErrorResponse {
+    ErrorCode code = 1;
+    string message = 2;
+}
