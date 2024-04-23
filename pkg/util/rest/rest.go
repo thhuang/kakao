@@ -6,7 +6,35 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/pkg/errors"
+	"google.golang.org/protobuf/proto"
+
+	"github.com/thhuang/kakao/pkg/proto/health"
+	"github.com/thhuang/kakao/pkg/util/ctx"
 )
+
+func Serve(ctx ctx.CTX, app *fiber.App, addr string) error {
+	app.Get("/health", func(c *fiber.Ctx) error {
+		res := &health.HealthResponse{
+			Status: "up",
+		}
+
+		bytes, err := proto.Marshal(res)
+		if err != nil {
+			return c.Status(fiber.StatusInternalServerError).SendString("proto marshal failed")
+		}
+
+		c.Set(fiber.HeaderContentType, fiber.MIMEApplicationJSON)
+
+		return c.Send(bytes)
+	})
+
+	if err := app.Listen(addr); err != nil {
+		return errors.Wrap(err, "Serve::Listen")
+	}
+
+	return nil
+}
 
 // RegisterStringTag registers a custom validation rule for a string field based on a regular expression.
 func RegisterStringTag(validate *validator.Validate, tag string, regex *regexp.Regexp) {
