@@ -6,7 +6,35 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
+	"github.com/pkg/errors"
+
+	"github.com/thhuang/kakao/pkg/util/ctx"
 )
+
+type HealthStatus string
+
+const (
+	HealthStatusUp   HealthStatus = "up"
+	HealthStatusDown HealthStatus = "down"
+)
+
+type HealthResponse struct {
+	Status HealthStatus `json:"status"`
+}
+
+func Serve(ctx ctx.CTX, app *fiber.App, addr string) error {
+	app.Get("/health", func(c *fiber.Ctx) error {
+		return c.Status(fiber.StatusOK).JSON(HealthResponse{
+			Status: HealthStatusUp,
+		})
+	})
+
+	if err := app.Listen(addr); err != nil {
+		return errors.Wrap(err, "Serve::Listen")
+	}
+
+	return nil
+}
 
 // RegisterStringTag registers a custom validation rule for a string field based on a regular expression.
 func RegisterStringTag(validate *validator.Validate, tag string, regex *regexp.Regexp) {
