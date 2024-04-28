@@ -6,7 +6,7 @@ import (
 
 type getWorkspaceResponse struct {
 	Id            string    `json:"id"`
-	FileStructure directory `json:"file_sturcture"`
+	FileStructure directory `json:"file_structure"`
 }
 
 type directory map[string][]interface{}
