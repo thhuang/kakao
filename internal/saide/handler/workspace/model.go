@@ -1,8 +1,6 @@
 package workspace
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
 )
 
@@ -17,19 +15,18 @@ type file map[string]string
 
 func (d directory) isValid() bool {
 	if len(d) != 1 {
-		fmt.Println(d, false)
 		return false
 	}
 
 	for _, vs := range d {
 		for _, v := range vs {
-			switch v.(type) {
+			switch t := v.(type) {
 			case directory:
-				if !v.(directory).isValid() {
+				if !t.isValid() {
 					return false
 				}
 			case file:
-				if !v.(file).isValid() {
+				if !t.isValid() {
 					return false
 				}
 			default:
