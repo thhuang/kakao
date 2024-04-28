@@ -5,9 +5,10 @@ import "errors"
 type ErrorCode int
 
 const (
-	ErrorCodeUnknown        ErrorCode = 13703
-	ErrorCodeNotImplemented ErrorCode = 13704
-	ErrorCodeBadRequest     ErrorCode = 13705
+	ErrorCodeUnknown              ErrorCode = 13703
+	ErrorCodeNotImplemented       ErrorCode = 13704
+	ErrorCodeBadRequest           ErrorCode = 13705
+	ErrorResponseValidationFailed ErrorCode = 13706
 )
 
 type ErrorResponse struct {
