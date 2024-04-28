@@ -6,14 +6,14 @@ import (
 
 type getWorkspaceResponse struct {
 	Id            string    `json:"id"`
-	FileStructure directory `json:"file_structure"`
+	FileStructure Directory `json:"file_structure"`
 }
 
-type directory map[string][]interface{}
+type Directory map[string][]interface{}
 
-type file map[string]string
+type File map[string]string
 
-func (d directory) isValid() bool {
+func (d Directory) isValid() bool {
 	if len(d) != 1 {
 		return false
 	}
@@ -21,11 +21,11 @@ func (d directory) isValid() bool {
 	for _, vs := range d {
 		for _, v := range vs {
 			switch t := v.(type) {
-			case directory:
+			case Directory:
 				if !t.isValid() {
 					return false
 				}
-			case file:
+			case File:
 				if !t.isValid() {
 					return false
 				}
@@ -38,7 +38,7 @@ func (d directory) isValid() bool {
 	return true
 }
 
-func (f file) isValid() bool {
+func (f File) isValid() bool {
 	if len(f) != 1 {
 		return false
 	}
