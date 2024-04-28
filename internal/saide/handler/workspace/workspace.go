@@ -30,44 +30,44 @@ func (h *handler) getWorkspace(c *fiber.Ctx) error {
 		})
 	}
 
-	fileStructure := directory{
+	fileStructure := Directory{
 		"/": {
-			file{
+			File{
 				"README.md": uuid.NewString(),
 			},
-			directory{
+			Directory{
 				"cmd": {
-					file{
+					File{
 						"main.go": uuid.NewString(),
 					},
 				},
 			},
-			directory{
+			Directory{
 				"pkg": {
-					directory{
+					Directory{
 						"service": {
-							directory{
+							Directory{
 								"mongo": {
-									file{
+									File{
 										"mongo.go": uuid.NewString(),
 									},
-									file{
+									File{
 										"impl.go": uuid.NewString(),
 									},
-									file{
+									File{
 										"impl_test.go": uuid.NewString(),
 									},
 								},
 							},
-							directory{
+							Directory{
 								"redis": {
-									file{
+									File{
 										"redis.go": uuid.NewString(),
 									},
-									file{
+									File{
 										"impl.go": uuid.NewString(),
 									},
-									file{
+									File{
 										"impl_test.go": uuid.NewString(),
 									},
 								},
