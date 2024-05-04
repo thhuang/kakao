@@ -2,11 +2,74 @@ package workspace
 
 import (
 	"github.com/google/uuid"
+	"github.com/thhuang/kakao/internal/saide/service/workspace"
 )
 
-type getWorkspaceResponse struct {
+type GetWorkspaceResponse struct {
 	Id            string    `json:"id"`
 	FileStructure Directory `json:"file_structure"`
+}
+
+func NewGetWorkspaceResponse(workspace *workspace.Workspace) (*GetWorkspaceResponse, error) {
+	// TODO: parse the file structure from the workspace object
+
+	fileStructure := Directory{
+		"/": {
+			File{
+				"README.md": uuid.NewString(),
+			},
+			Directory{
+				"cmd": {
+					File{
+						"main.go": uuid.NewString(),
+					},
+				},
+			},
+			Directory{
+				"pkg": {
+					Directory{
+						"service": {
+							Directory{
+								"mongo": {
+									File{
+										"mongo.go": uuid.NewString(),
+									},
+									File{
+										"impl.go": uuid.NewString(),
+									},
+									File{
+										"impl_test.go": uuid.NewString(),
+									},
+								},
+							},
+							Directory{
+								"redis": {
+									File{
+										"redis.go": uuid.NewString(),
+									},
+									File{
+										"impl.go": uuid.NewString(),
+									},
+									File{
+										"impl_test.go": uuid.NewString(),
+									},
+								},
+							},
+						},
+					},
+				},
+			},
+		},
+	}
+
+	if !fileStructure.isValid() {
+		return nil, ErrInvalidFileStructure
+	}
+
+	return &GetWorkspaceResponse{
+		Id:            workspace.Id.String(),
+		FileStructure: fileStructure,
+	}, nil
 }
 
 type Directory map[string][]interface{}
