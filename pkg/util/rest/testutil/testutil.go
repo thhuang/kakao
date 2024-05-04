@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strings"
 
-	errorUtil "github.com/thhuang/kakao/pkg/util/error"
+	"github.com/thhuang/kakao/pkg/util/errutil"
 	"github.com/thhuang/kakao/pkg/util/keyword"
 )
 
@@ -66,10 +66,10 @@ func DecodeResBody(res *http.Response) map[string]interface{} {
 }
 
 // GetResErrorCode extracts an error code from the response body.
-func GetResErrorCode(resBody map[string]interface{}) errorUtil.ErrorCode {
+func GetResErrorCode(resBody map[string]interface{}) errutil.ErrorCode {
 	code, ok := resBody[keyword.Code]
 	if !ok {
 		panic(errors.New("error code not found"))
 	}
-	return errorUtil.ErrorCode(int(code.(float64)))
+	return errutil.ErrorCode(int(code.(float64)))
 }
