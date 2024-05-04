@@ -4,7 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/uuid"
 
-	errorUtils "github.com/thhuang/kakao/pkg/util/error"
+	"github.com/thhuang/kakao/pkg/util/errutil"
 )
 
 func New(
@@ -24,8 +24,8 @@ func (h *handler) getWorkspace(c *fiber.Ctx) error {
 	workspaceIdString := c.Params("id")
 	workspaceId, err := uuid.Parse(workspaceIdString)
 	if err != nil {
-		return c.Status(fiber.StatusBadRequest).JSON(errorUtils.ErrorResponse{
-			Code:    errorUtils.ErrorCodeBadRequest,
+		return c.Status(fiber.StatusBadRequest).JSON(errutil.ErrorResponse{
+			Code:    errutil.ErrorCodeBadRequest,
 			Message: err.Error(),
 		})
 	}
@@ -80,8 +80,8 @@ func (h *handler) getWorkspace(c *fiber.Ctx) error {
 	}
 
 	if !fileStructure.isValid() {
-		return c.Status(fiber.StatusInternalServerError).JSON(errorUtils.ErrorResponse{
-			Code:    errorUtils.ErrorResponseValidationFailed,
+		return c.Status(fiber.StatusInternalServerError).JSON(errutil.ErrorResponse{
+			Code:    errutil.ErrorResponseValidationFailed,
 			Message: "invalid file structure",
 		})
 	}
