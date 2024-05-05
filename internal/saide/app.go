@@ -14,6 +14,10 @@ import (
 	"github.com/thhuang/kakao/pkg/util/ctx"
 	"github.com/thhuang/kakao/pkg/util/rest"
 
+	// Services
+	workspaceService "github.com/thhuang/kakao/internal/saide/service/workspace"
+
+	// Handlers
 	workspaceHandler "github.com/thhuang/kakao/internal/saide/handler/workspace"
 )
 
@@ -35,9 +39,13 @@ func New(ctx ctx.CTX) *App {
 	app.Use(recover.New())
 	app.Use(requestid.New())
 	app.Use(limiter.New(limiterConfig))
+	app.Use(rest.AddContext())
+
+	// Services
+	workspaceService := workspaceService.New()
 
 	// Handlers
-	workspaceHandler.New(app.Group("/workspaces"))
+	workspaceHandler.New(app.Group("/workspaces"), workspaceService)
 
 	return &App{
 		app: app,
