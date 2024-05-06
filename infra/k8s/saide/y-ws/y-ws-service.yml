@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: y-ws-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 13701
+      targetPort: 80
+  selector:
+    app: y-ws
