@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: y-ws-deployment
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: y-ws
@@ -13,7 +13,7 @@ spec:
         app: y-ws
     spec:
       containers:
-        - name: y-ws-container
+        - name: y-ws
           image: tzuhsuanhuang/y-ws:latest
           ports:
             - containerPort: 80

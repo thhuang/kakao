@@ -1,0 +1,24 @@
+# Make sure to enable the ingress addon when testing with Minikube:
+#   $ minikube addons enable ingress
+# Reference: https://kubernetes.io/docs/tasks/access-application-cluster/ingress-minikube/
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: y-ws-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.org/websocket-services: 'y-ws-service'
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: yws.com
+      http:
+        paths:
+          - path: /ws
+            pathType: Prefix
+            backend:
+              service:
+                name: y-ws-service
+                port:
+                  number: 80
