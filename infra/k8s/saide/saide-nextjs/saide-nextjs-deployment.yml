@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: saide-nextjs-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: saide-nextjs
+  template:
+    metadata:
+      labels:
+        app: saide-nextjs
+    spec:
+      containers:
+        - name: saide-nextjs-container
+          image: tzuhsuanhuang/saide:latest
+          ports:
+            - containerPort: 3000
